@@ -1,0 +1,113 @@
+\documentclass[12pts]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[margin = 1in]{geometry}
+\usepackage[spanish]{babel} 
+\decimalpoint
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amsfonts} % mathbb
+\usepackage{mathrsfs} % mathscr
+\usepackage{enumitem} % letras en enumerate
+\usepackage[bottom]{footmisc}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{graphicx}
+\graphicspath{{imag/}}
+\setlength\parindent{0pt} % Quita indents de todo el documento
+\author{}
+\date{}
+\title{CAPM}
+\begin{document}
+\maketitle 
+\textbf{Recordatorio:} Ya se dijo que, cuando hay n activos riesgosos y un activo libre de riesgo se cumple 
+$$\frac{\mathbb{E}(r_i)-r_f}{Cov(r_i, r_m)} =\frac{\mathbb{E}(r_m)-r_f}{Var(r_m)}$$
+Equivalentemente, 
+$$\mathbb{E}(r_i)-r_f = \frac{Cov(r_i, r_m)}{Var(r_m)}[\mathbb{E}(r_m)-r_f]$$
+Esto motiva que se haga la siguiente definición.\\ \\
+\textbf{Definición:}La beta del activo i se define como $$ \beta_i := \frac{Cov(r_i, r_m)}{Var(r_m)}$$
+
+Con esta definición, se puede reescribir la ecuación anterior como: 
+$$ \mathbb{E}(r_i)=r_f +\beta_i [\mathbb{E}(r_m)-r_f]$$
+
+\begin{itemize}
+\item El modelo completo (incluyendo las suposiciones detrás del modelo se establecerán más adelanate y el analisis media-varianza) que implica esta ecuación se conocme como \textbf{Capital Asset Pricing Model} (CAPM) y la ecuación que resume el resultado final se conoce como \textbf{Security Market Line} (SML). 
+\item La SML establece que: \\ Prima de riesgo esperado sobre la acción$=$ Beta de la acción (Prima esperada de riesgo del mercado) $$\mathbb{E}(r_i)-r_f=\beta_i [\mathbb{E}(r_m)-r_f]$$
+\item Notese que $\beta_i=\frac{\mathbb{E}(r_i)-r_f}{\mathbb{E}(r_m)-r_f}$. Es decir, la beta de un security es el porcentaje de cambio esperado por unidad de rendimieno en el portafolio de mercado. 
+\item Si se tienen $r_f$ y $\mathbb{E}(r_m)$ fijos, se puede graficar $\beta$ (eje horizontal)vs $\mathbb{E}(R)$ (eje vertical), que es precisamente la SML. 
+\item La SML es la grafica de la aplicación $\beta \longmapsto \mathbb{E}(r)=r_f +\beta [\mathbb{E}(r_m)-r_f]$.
+\item Culaquier activo y portafolio, no importa si son eficientes o no, deben caer en la SML. 
+\item La recta tiene pendiente positiva, i.e., $\mathbb{E}(r_m)>r_f$, lo que significa que un security con una \textbf{beta alta} tiene un rendimeinto \textbf{esperado alto}. 
+\item Para resumir, el CAPM establece que el rendimiento esperado sobre un security está relacionado positiva y linealmente con $\beta$ 
+\end{itemize}
+Considérese una acción A cuyo rendimiento \textbf{no} está en la CML. Considérese el portafolio B con el mismo rendimiento esperado que A pero que si esta en la CML, i.e., $\mathbb{E}(r_B)=\mathbb{E}(r_A) \, \sigma_B<\sigma_A$ entonces $\sigma_A-\sigma_B=\mathbb{I}$ es el riesgo diversificable por el que los inversionistas de A no son compensados. \\
+Matematicamente, $$\frac{\mathbb{E}(r_B)-r_f}{\sigma_B}=pendiente\, de\, la \, CML=\frac{\mathbb{E}(r_m)-r_f}{\sigma_m}$$
+De aquí que, $$\sigma_B=\sigma_m(\frac{\mathbb{E}(r_B)-r_f}{\mathbb{E}(r_m)-r_f})=\sigma_m (\frac{\mathbb{E}(r_A)-r_f}{\mathbb{E}(r_m)-r_f})$$ Pues, $\mathbb{E}(r_A)=\mathbb{E}(r_B)$ 
+$$=\sigma_m(\beta_A)$$ es decir, $$\sigma_B=\beta_A \sigma_m$$
+$$\Rightarrow \beta_A=\frac{\sigma_B}{\sigma_m}<1$$
+$$\Rightarrow \mathbb{E}(r_A) es \, pequena$$ 
+
+\section{Algunas aplicaciones del CAPM} 
+Supongase un portafolio que tiene un Sharpe-Ratio $\frac{\mathbb{E}(r_\pi)-r_f}{\sigma_\phi}$, donde $r_\pi$ es la tasade rendimiento del portafolio. \\ Se está considerando hacer una inversión con tasa de rendimiento $r_i$. Como se está pidiendo prestado 
+$r_f$ para hacer esta inversión, el rendimiento incremental es $\mathbb{E}(r_i)-r_f$ \\ La contribución a la volatilidad del portafolio es $Corr(r_\pi, r_i)\sigma_i$. Sin embargo, 
+$$Corr(r_\pi, r_i)\sigma_i =\frac{Cov(r_\pi, r_i)}{\sigma_\pi \sigma_i}\sigma_i = \frac{Cov(r_\pi, r_i}{\sigma_\pi}$$ 
+Por lo tanto, el Sharpe-Ratio se incrementa sólo si $$\frac{\mathbb{E}(r_i)-r_f}{Corr(r_\pi, r_i)\sigma_i}>\frac{\mathbb{E}(r_\pi)-r_f}{\sigma_\pi}$$
+Es decir, si $Corr(r_\pi, r_i)>0$, y entonces, 
+$$\mathbb{E}(r_i)-r_f>\frac{\mathbb{E}(r_\pi)-r_f}{\sigma_\pi}Corr(r_\pi, r_i)\sigma_i$$ 
+$$=\frac{\mathbb{E}(r_\pi)-r_f}{\sigma_\pi} \frac{Cov(r_\pi, r_i)}{\sigma_\pi}=\frac{\sigma_{\pi, i}}{\sigma_\pi^2}[\mathbb{E}(r_\pi)-r_f]$$
+Es decir, hay un incremento en el Sharpe-Ratio si, 
+$$\mathbb{E}(r_i)-r_f>frac{\sigma_{\pi, i}}{\sigma_\pi^2}[\mathbb{E}(r_\pi)-r_f]$$
+Si se define la beta de la inversión i, con respecto al portafolio $\pi$ como 
+$$\beta_i^\pi:=\frac{Corr(r_\pi, r_i)\sigma_i}{\sigma_\pi}=\frac{Cov(r_\pi,r_i)}{\sigma_\pi^2}$$
+Entonces, la inversión incrementa al Sharpe-Ratio sólo si: 
+$$\mathbb{E}(r_i)-r_f>\beta_i^\pi(\mathbb{E}(r_\pi)-r_f)$$ 
+i.e., 
+$$\mathbb{E}(r_i)>r_f + \beta_i^\pi(\mathbb{E}(r_\pi)-r_f)$$
+En un portafolio eficiente, el rendimiento sobre cada inversión es el rendimiento requerido, i.e., 
+$$\mathbb{E}(r_i)=r_f + \beta_i^\pi(\mathbb{E}(r_\pi)-r_f)$$
+
+\textbf{Ejemplo:} Se tiene la siguiente información acerca de 2 acciones. 
+\begin{center}
+ \begin{tabular}{||c c c ||} 
+ \hline
+  & Rendimiento Esperado & Volatilidad \\ [0.5ex] 
+ \hline\hline
+ A & 0.1 &0.2 \\ 
+ \hline
+ B & 0.2 & 0.5\\ 
+ \hline
+\end{tabular}
+\end{center}
+Además, la correlación entre los rendimientos de las acciones es de 0.8, la tasa de interes libre de riesgo efectiva anual es del $2\%$. \\ Se forma un portafolio con $50\%$ del activo A y $50\%$ del activo B. \\La acción C tiene una volatilidad del 0.3, su correlación con el activo A es del 0.1 y con el activo B del 0.4. Calcular el rendimiento requerido sobre la acción C para justificar agregarlo al portafolio. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document} 

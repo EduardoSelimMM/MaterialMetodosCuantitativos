@@ -1,0 +1,173 @@
+\documentclass[12pts]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[margin = 1in]{geometry}
+\usepackage[spanish]{babel} 
+\decimalpoint
+\usepackage{amsmath}
+\usepackage[all]{xy}
+\usepackage{mathtools}
+\usepackage{amsfonts} % mathbb
+\usepackage{mathrsfs} % mathscr
+\usepackage{enumitem} % letras en enumerate
+\usepackage[bottom]{footmisc}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{graphicx}
+\graphicspath{{imag/}}
+\setlength\parindent{0pt} % Quita indents de todo el documento
+\author{}
+\date{}
+\title{Opciones Binarias}
+\begin{document}
+\maketitle
+\begin{itemize}
+\item Ya la clase pasada les presente a las opciones all-or-nothing o binarias o digitales.
+\item Una call cash-or-nothing paga \$1 al tiempo T si $S_T>K$ y nada en otro caso, i.e.,
+$$Payoff= \begin{cases} \$ 1 & \mbox{si } S_T>K  \\
+                                            0 & \mbox{si } S_T \leq K \end{cases} =\mathbb{I}_{S_T>K}$$ 
+
+\item Una put cash-or-nothing paga \$ al tiempo T si $S_T<K$ y nada en otro caso, i.e., 
+$$Payoff= \begin{cases} \$ 1 & \mbox{si } S_T< K  \\
+                                            0 & \mbox{si } S_T \geq K \end{cases} =\mathbb{I}_{S_T<K}$$ 
+\item Una call asset-or-nothing paga $S_T$ (i.e., una unidad de acción) si $S_T>K$ y nada en otro caso, i.e., 
+$$Payoff= \begin{cases} S_T & \mbox{si } S_T>K  \\
+                                            0 & \mbox{si } S_T \leq K \end{cases} =S_T \mathbb{I}_{S_T>K}$$ 
+\item Una put asset-opr-nothing paga $S_T$ (i.e., una unidad de acción) si $S_T<K$ y nada en otro caso, i.e., 
+$$Payoff= \begin{cases} \$ 0 & \mbox{si } S_T\geq K  \\
+                                            S_T & \mbox{si } S_T < K \end{cases} =\mathbb{I}_{S_T<K}$$ 
+
+\end{itemize}
+%%%%%Van los diagramas
+\newpage 
+\newpage
+\section{Observaciones importantes} 
+\begin{enumerate}
+\item $$(S_T-K)_+=max\{S_T-K,0\}$$  
+$$=(S_T-K)\mathbb{I}_{(S_T>K)}$$  
+$$=S_T \mathbb{I}_{S_T>K}- K \mathbb{I}_{S_T>K}$$
+i.e., 
+$$(S_T-K)_+=S_T \mathbb{I}_{S_T>K}- K \mathbb{I}_{S_T>K}$$
+Es decir que comprar una call Europea es equivalente a comprar una call asset-or-nothing y vender K calls cash-or-nothing.
+\item $$(K-S_T)_+=max\{K-S_T,0\}$$  
+$$=(K-S_T)\mathbb{I}_{(S_T<K)}$$  
+$$=K\mathbb{I}_{S_T<K}- S_T \mathbb{I}_{S_T<K}$$
+i.e., 
+$$(K-S_T)_+=K \mathbb{I}_{S_T<K}- S_T \mathbb{I}_{S_T<K}$$
+Es decir que comprar una put Europea es equivalente a comprar K puts cash-or-nothing y vender una put asse- or-nothing. 
+\\ \\
+Esta observación será muy importante más adelante, cuando tengamos un marco de valuación. 
+\end{enumerate}
+
+\section{Opciones GAP}
+\begin{itemize}
+\item Recuérdese que para call y puts vainilla los payoff son 
+$$Payoff_{call}= \begin{cases} 0 & \mbox{si } S_T\leq K  \\
+                                            S_T-K & \mbox{si } S_T > K \end{cases} =(S_T -K)_+$$ 
+$$Payoff_{put}= \begin{cases} K- S_T & \mbox{si } S_T \geq K  \\
+                                            0 & \mbox{si } S_T > K \end{cases} =(K-S_T)_+$$
+\item Para opciones gap se tienen 2 K´s.
+$$Payoff_{call gap}=\begin{cases} 0 & \mbox{si } S_T \leq K_2  \\
+                                            S_T-K_1 & \mbox{si } S_T > K_2 \end{cases} $$
+$$Payoff_{put gap}=  \begin{cases} K_1-S_T & \mbox{si } S_T \leq K_2  \\
+                                            0 & \mbox{si } S_T > K_2 \end{cases} $$
+$\rightarrow$ A $K_1$ se le conoce como strike price (como antes) \\
+$\rightarrow$ A $K_1$ se le conoce como trigger price, especifica la región donde la opción estará forzada a ejercer. \\
+¿Por qué se dice que $K_2$ especifica la región donde la opción estará forzada a ejercer?\\ 
+En principio no se dijo nada con respecto a $K_1 \, , K_2$, puede ser que $K_1<K_2$ o $K_1>K_2$.
+\item El Payoff de una $(K_1,K_2)-call gap$ es 
+$$Payoff=\begin{cases} 0 & \mbox{si} S_T\geq K_2 \\ 
+                                        S_T-K_1 & \mbox{si} S_T>K_2 \end{cases} $$
+\vfill 
+%%%van graficas %%%%%
+\item El payoff de una $(K_1,K_2)-put \, gap$ es 
+$$Payoff=\begin{cases} K_1-S_T & \mbox{si} S_T\geq K_2 \\ 
+                                        0 & \mbox{si} S_T>K_2 \end{cases} $$
+\vfill 
+%%van graficas%%%
+
+\end{itemize}
+\section{Valuación de opciones gap}
+\begin{itemize}
+\item Obsérvese que 
+$$Payoff_{call \, gap}=\begin{cases} 0 & \mbox{si} S_T\geq K_2 \\ 
+                                        S_T-K_1 & \mbox{si} S_T\geq K_2 \end{cases} $$
+$$=(S_T-K_1)\begin{cases} 0 & \mbox{si} S_T\geq K_2 \\ 
+                                              1 & \mbox{si} S_T>K_2 \end{cases}$$
+$$=(S_T-K_1)\mathbb{I}_{S_T>K_2}$$
+$$=(S_T-K_1)\mathbb{I}_{S_T>K_2}-K_1 \mathbb{I}_{S_T>K_2}$$
+\item Obsérvese también que
+$$Payoff_{put \, gap}=\begin{cases} K_1-S_T & \mbox{si} S_T\geq K_2 \\ 
+                                        0 & \mbox{si} S_T>K_2 \end{cases} $$
+$$=(K_1-S_T)\begin{cases} 1 & \mbox{si} S_T\geq K_2 \\ 
+                                              0 & \mbox{si} S_T>K_2 \end{cases}$$
+$$=(K_1-S_T)\mathbb{I}_{S_T\geq K_2}$$
+$$=K_1\mathbb{I}_{S_T\geq K_2}-S_T\mathbb{I}_{S_T\geq K_2}$$
+
+\end{itemize}
+\section{Paridad con opciones Gap}
+\begin{itemize}
+\item Nótese que 
+$$Payoff_{call \, gap}-Payoff_{put \, gap}=S_T\mathbb{S_T>K_2}-K_1\mathbb{S_T>K_2}-(K_1\mathbb{S_T\geq K_2}-S_T\mathbb{I}_{S_T\geq K_2})$$
+$$=S_T(\mathbb{I}_{S_T>K_2})+\mathbb{I}_{S_T \geq K_2})-K_1(\mathbb{I}_{S_T>K_2}+\mathbb{I}_{S_T \geq K_2})$$
+$$=S_T*1-K_1*1$$
+$$=S_T-K_1$$
+Es decir,
+$$Payoff_{call \, gap}-Payoff_{put \, gap}=S_T-K_1$$
+Esto es el payoff de un forward largo con strike $K_1$. \\
+Esto quiere decir que 
+$$C_{gap}(S_T,t,K_1,K_2)-P_{gap}(S_T,t,K_1,K_2)=f(S_t,K_1)$$
+¿Por qué? 
+\end{itemize}
+\section{Relaciones entre opciones gap y opciones vainilla}
+\begin{itemize}
+\item Ya se dijo que el payoff de una $(K_1,K_2-call \, gap$ es $(S_T-K_1)\mathbb{I}_{S_T>K_2}$, sin embargo, 
+$$(S_T-K_1)\mathbb{I}_{S_T>K_2}=(S_T-K_2+K_2-K-1)\mathbb{I}_{S_T>K_2}$$
+$$=(S_T-K_2)\mathbb{I}_{S_T>K_2}+(K_2-K_1)\mathbb{I}_{S_T>K_2}$$
+$$=(S_T-K_2)_+ +(K_2-K-1)\mathbb{I}_{S_T>K_2}$$ 
+Es decir, 
+$$Payoff_{call \, gap}= payoff_{call} + payoff \, de (K_2-K_1) \, calls$$ 
+De aquí que, 
+$$C_{gap}(S_T,T,K_1,K_2)=C(S_T,K_2,T)+(K_2-K_1)C(S_T,K-2,T)$$
+¿Por qué?
+\item Ya se dijo también que el payoff de una $(K_1,K_2)-put \, gap$ es 
+$$(K_1-S_T)\mathbb{I}_{S_T \geq K_2}$$
+Sin embargo, 
+$$(K_1-S_T)\mathbb{I}_{S_T \geq K_2}=(K_1-K_2+K-2-S_T)\mathbb{I}_{S_T \geq K_2}$$
+$$=(K_1-K-2)\mathbb{I}_{S_T \geq K_2} +(K_2-S_T)\mathbb{I}_{S_T \geq K_2}$$
+$$=(K_1-K-2)\mathbb{I}_{S_T \geq K_2} +(K_2-S_T)_+$$
+Es decir, 
+$$Payoff_{put \, gap}=Payoff \, de \, K_2-K-1 puts + Payyoff \, de \, una \, put \, con \, strike \, K_2$$
+De aquí que
+$$P_{gap}(S_T,T,K_1,K_2)=(K_2-K-1)P_{cash-or-nothing}+P(S_T,K_2,T)$$
+¿Por qué?
+
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
