@@ -1,0 +1,218 @@
+\documentclass[12pts]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[margin = 1in]{geometry}
+\usepackage[spanish]{babel} 
+\decimalpoint
+\usepackage{amsmath}
+\usepackage[all]{xy}
+\usepackage{mathtools}
+\usepackage{amsfonts} % mathbb
+\usepackage{mathrsfs} % mathscr
+\usepackage{enumitem} % letras en enumerate
+\usepackage[bottom]{footmisc}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{graphicx}
+\graphicspath{{imag/}}
+\setlength\parindent{0pt} % Quita indents de todo el documento
+\author{}
+\date{}
+\title{Forward}
+\begin{document}
+\maketitle 
+¿Cuánto cuesta un Forward? \\ Supongamos que el plazo del Forward es T, el precio pactado es K y la tasa libre de riesgo con composición continua es r. 
+\begin{itemize}
+\item \textbf{Caso 1:} La acción subyacente, NO paga dividendos. \\ Consideremos 2 potafolios: 
+$$ \pi^{(1)}: Una \, accion \, del  \, subyacente $$ 
+$$ \pi^{(2)}: Un \, forward \, large \, y \, una \, inversion \, a \, la \, tasa \, libre \, de \, riesgo \, de \, Ke^{-rT}$$
+En T, ¿cuánto vale $\pi^{(1)}$ ? 
+$$\pi_T^{(1)}=S_T$$
+En T, ¿cuánto vale $\pi^{(2)}$? 
+$$\pi_T^{(2)} =S_T-K +(Ke^{-rT})e^{rT}$$
+$$=S_T-K+K$$
+$$=S_T$$
+¡Wow! Tengo 2 portafolios que en T valen lo mismo. \\ Por ley del precio unico $$\pi_0^{(1)}=\pi_0^{(2)} .... :)$$ 
+¿Cuánto vale hoy el portafolio 1?
+$$\pi_0^{(1)}=S_0$$
+
+¿Cuánto vale hoy el portafolio 2?
+$$\pi_0^{(2)}= f + Ke^{-rT}$$
+  
+ Entonces, por :) tenemos que 
+$$f+Ke^{-rT}=S_0$$
+$$f=S_0-Ke^{-rT}$$
+Este es el precio de un forward en el caso de una acción que no paga dividendos. 
+
+\item \textbf{Caso 2:} La acción subyacente paga dividendos continuos a la tasa $\delta$. \\
+1 unidad de acción hoy $\rightarrow$ $e^{\delta T}$ unidades de acción en T. 
+\\ Consideremos 2 portafolios 
+$$ \pi^{(1)}: Una \, unidad \, de \, accion $$ 
+$$ \pi^{(2)}: e^{\delta T} \, forwards \, largos\, sobre \, la \, accion  \, y \, una \, inversion \, a \, la \, tasa \, libre \, de \, riesgo \, de \, Ke^{-(r-\delta)T}$$
+En T, ¿cuánto vale el portafolio 1 ? 
+$$\pi_T^{(1)}=e^{\delta T} S_T$$
+En T, ¿cuánto vale el portafolio 2? 
+$$\pi_T^{(2)} =e^{\delta T}(S_T-K) +(Ke^{-(r-\delta)T})e^{rT}$$
+$$=e^{\delta T}(S_T-K)+Ke^{\delta T}$$
+$$=e^{\delta T}S_T-e^{\delta T}K+ke^{\delta T}$$
+$$= e^{\delta T}S_T$$
+¡Wow! Tengo 2 portafolios que al tiempo T tienen el mismo valor. 
+$$\pi_T^{(1)}=\pi_T^{(2)}=e^{\delta T}S_T$$
+Por ley del precio único
+$$\pi_0^{(1)}=\pi_0^{(2)}... :S$$
+¿Cuánto vale hoy el portafolio 1?
+$$\pi_0^{(1)}=S_0$$
+
+¿Cuánto vale hoy el portafolio 2?
+$$\pi_0^{(2)}= e^{\delta T}f + Ke^{-(r-\delta)T}$$
+  
+ Entonces, por :S tenemos que 
+$$e^{\delta T}f+Ke^{-(r-\delta)T}=S_0$$
+Despejando f,
+$$S_0-Ke^{-(r-\delta)T}=e^{\delta T}f$$
+$$f=S_0e^{-\delta T}-Ke^{-rT}$$
+Esto es, el preco del forward en el caso de una acción que paga dividendo continuos. 
+
+\item \textbf{Caso 3:} La acción subyacente paga dividendos discretos.\\
+¿Qué significa que la acción pague dividendos dicretos? \\
+Significa que el poseedor de la acción recibirá un $Div_j$ al tiempo $t_j$ 
+%%va una linea de tiempo %%
+\\
+Se supondrá que las fichas de pagos de dividendos son conocidas y también el monto de cada dividendo. \\
+Considerando 2 portafolios.
+$$ \pi^{(1)}: Una \, unidad \, de \, accion $$ 
+$$ \pi^{(2)}: Un \, forward \, largos\, sobre \, la \, accion  \, y \, una \, inversion \, a \, la \, tasa \, libre \, de \, riesgo \, de \, Ke^{-rT} \, y \, un \, bono\, libre \, de \, riesgo \, que \, pague \, el \, cupon \, Div_j \, al \, tiempo \, t_j$$
+¿Cuánto vale el portafolio 1 al tiempo T? 
+$$\pi_T^{(1)}=S_T + \sum_{j=1}^{m} Div_j e^{r(T-t_j)}$$
+En T, ¿cuánto vale el portafolio 2? 
+$$\pi_T^{(2)} =S_T-K +(ke^{-rT})e^{rT} +\sum_{j=1}^{m} Div_j e^{r(T-t_j)}$$
+$$=S_T+\sum_{j=1}^{m} Div_j e^{r(T-t_j)}$$
+
+¡Wow! Tengo 2 portafolios que al tiempo T coincien en el  valor. \\
+Por ley del precio único
+$$\pi_0^{(1)}=\pi_0^{(2)}... :V$$
+¿Cuánto vale hoy el portafolio 1?
+$$\pi_0^{(1)}=S_0$$
+
+¿Cuánto vale hoy el portafolio 2?
+$$\pi_0^{(2)}=f+K e^{-r T} + \sum_{j=1}^{m} Div_j e^{-rt_j}$$
+  
+ Entonces, por :V tenemos que 
+$$S_0=f+K e^{-r T} + \sum_{j=1}^{m} Div_j e^{-rt_j}$$
+Despejando f,
+$$f=S_0-ke^{-rT}- \sum_{j=1}^{m} Div_j e^{-rt_j}$$
+Precio de un forward para el caso de una acción que paga dividendos discretos. 
+\end{itemize} 
+
+¿Cuánto vale el \textbf{precio forward}? \\
+El precio forward es el valor de K que hace que f sea 0.
+\begin{itemize}
+\item Caso 1: $f=S_0-ke^{-rT}$
+$$0=S_0-ke^{-rT}$$
+$$K=S_0e^{rT}$$ 
+\textbf{Notación:} $F_{0,T}(S)$
+\item Caso 2:  $f=S_0e^{-\delta T}-ke^{-rT}$
+$$0=S_0e^{-\delta T}-ke^{-rT}$$
+$$K=S_0e^{(r-\delta)T}$$ 
+\textbf{Notación:} $F_{0,T}(S_0)$
+\item Caso 3: Tareita
+
+\end{itemize} 
+\textbf{Recordatorio} \\
+%%Viene un corchete con 3 niveles que no sé hacer :C %%%
+\\ \\ 
+\textbf{Notación:}
+%%corchete grande%%
+\\ \\ 
+\textbf{Definición:} $F_{0,T}^P (S):=F_{0,T}(S)e^{-rT}$ \\
+A $F_{0,T}^P (S)$ se le conoce como prepaid forward price. \\
+A $F_{0,T}(S)$ se le conoce como forward price o precio forward. \\
+Claramente, 
+%%%corchete%%%%%
+\\ \\ 
+ 
+\textbf{Recordatorio:} Paridad put-call. 
+$$Call-Put=Forward$$
+Ya podemos dar 3 versiones de esta paridad. 
+ \begin{itemize}
+\item Acción no paga dividendos. 
+$$C(S,K,T)-P(S,K,T)=S_0-Ke^{-rT} ... (<3)$$
+$$=F_{0,T}^{P} (S)-Ke^{-rT}$$
+\item Acción que paga dividendos continuos
+$$C(S,K,T)-P(S,K,T)=S_0e^{-\delta T}-Ke^{-rT}$$
+$$=F_{0,T}^{P} (S)-Ke^{-rT}$$
+\item Acción que paga dividendos discretos.
+$$C(S,K,T)-P(S,K,T)=S_0-\sum_{j=1}^{m} Div_j e^{-rt_j}-Ke^{-rT}$$
+$$=F_{0,T}^{P} (S)-Ke^{-rT}$$
+\end{itemize}
+Podemos reescribir la ec. $(<3)$
+$$C(S,K,T)-P(S,K,T)=S_0-Ke^{-rT}$$
+$$C(S,K,T)+Ke^{-rT}=P(S,K,T)=S_0$$
+Si yo compro una call, más me vale tener el dinero para poder ejercerla, i.e., necesito tener K en T si decido ejercerla. Si yo compro un aput (estoy comprando el derecho a vender) más me vale tener algo que vender (la acción) en casi de que decida hacerlo. 
+\newpage 
+\textbf{Definición: Opcion chooser} \\
+Una opción chooser con un plazo de T es una opción que tiene la caracteristica de que al tiempo $t_0<T$ ($t_0$ es fijo y contractualmente) el poseedor de ésta puede elegir si la opción es una put o una call con vencimiento en T. 
+%%va una linea de tiempo%%%
+\\
+¿Cuánto cuesta en 0 una opción chooser?
+\\
+¿Cuánto vale en $t_0$ una opción chooser? 
+$$max\{C(S_{t_0},K,T-t_0), P(S_{t_0}, K, T-t_0)\}$$ 
+
+\textbf{Observación:} Usando la paridad put-call $C-P=f, P=C-f$
+$$max\{C(S_{t_0},K,T-t_0), P(S_{t_0}, K, T-t_0)\}$$
+$$=max\{C(S_{t_0},K,T-t_0), C(S_{t_0},K,T-t_0)-F_{0,T-t_0}^{P} (S)+ke^{-r(T-t_0)}\}$$
+\textbf{Recordatorio:} \\
+Para $a,b,c \in \mathbb{R}_+$
+$$max\{a,b\}=c+max\{a-c,b-c\}$$ 
+Entonces, 
+$$=C(S_{t_0},K,T-t_0)+max\{0, ke^{-r(T-t_0)}-F_{0, T-t_0}^{P}(S)\}$$
+Para una acción que no paga dividendos
+$$=C(S_{t_0},K,T-t_0)+max\{0, ke^{-r(T-t_0)}-S_{t_0}\}$$
+Así pues, 
+$$V_0 = C(S_0,K,T)+ P(S_{0}, Ke^{-r(T-t_0)}, t_0)$$
+
+%%van algunos diagramas (?) %%%%
+
+Considere un portafolio que contiene lo siguiente.
+\begin{enumerate}
+\item Una call con strike K y plazo T 
+\item Una put con strike $ke^{-r(T-t_0)}$ y plazo $t_0$ 
+\end{enumerate}
+¿Cuánto vale este portafolio al tiempo $t_0$?
+\begin{enumerate}
+\item Simplemete $C(S_{t_0}, K, T-t_0)$
+\item El payoff $(Ke^{-r(T-t_0)}-S_{t_0})$
+\end{enumerate}
+Por lo tanto, podemos concluir que el precio de la chooser option al tiempo 0 es,
+$$V_0=C(S_0,K,T)+P(S_0, Ke^{-r(T-t_0)}, t_0)$$
+Este valor también lo pudimos obtener de la siguiente forma. \\
+Al tiempo $t_0$, dijimso que el valor de esta opción es 
+$$max\{C(S_{t_0}, K, T-t_0), P(S_{t_0},K,T-t_0)\}$$ 
+$$=P(S_{t_0},K,T-t_0)+max\{C(S_{t_0},K,T-t_0)-P(S_{t_0},K,T-t_0),0 \}$$
+$$=P(S_{t_0},K,T-t_0)+max\{F_{T-t_0}(S)-Ke^{-r(T-t_0)},0 \}$$
+$$=P(S_{t_0},K,T-t_0)+max\{S_{t_0}-Ke^{-r(T-t_0)},0 \}$$
+$$=P(S_{t_0},K,T-t_0)+(S_{t_0}-Ke^{-r(T-t_0)})_+$$
+Con el mismo razonamiento que se utilizo anteriormente 
+$$V_0= P(S_0,K,T)+C(S_0, Ke^{-r(T-t_0)}, t_0)$$
+
+Las expresiones anteriores son para el valor de la opción chooser. \\ 
+En todo lo que hemos visto esta semana, aparecen $C(*)$ y $P(*)$, i.e., las primas de una call y una put. ¡Necesitamos saber cuanto valen estas! 
+\\ 
+Afortunada o desafortunadamente, para encontrarlas necesitamos alguna hpt con respecto a la distribución de $S_t$ 
+\begin{itemize}
+\item Framework B\&S.
+\item árboles binomiales.
+\end{itemize} 
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document} 

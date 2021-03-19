@@ -1,0 +1,257 @@
+\documentclass[12pts]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[margin = 1in]{geometry}
+\usepackage[spanish]{babel} 
+\decimalpoint
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amsfonts} % mathbb
+\usepackage{mathrsfs} % mathscr
+\usepackage{enumitem} % letras en enumerate
+\usepackage[bottom]{footmisc}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{graphicx}
+\graphicspath{{imag/}}
+\setlength\parindent{0pt} % Quita indents de todo el documento
+\author{}
+\date{}
+\title{Browniano}
+\begin{document} 
+\maketitle
+\textbf{Definiión:} Se dice que un proceso estocastico $(B_t)_{t\geq0}$ es un movimiento Browniano estandar si:
+\begin{enumerate}
+\item $B_0 =0$ c.s
+\item $B_{t+s}|B_t =b \sim N(b,s)$
+\item Tiene incrementos independientes, i.e, $B_{t+s_{1}} -B_t \perp B_t-B_{t-{s_2}}$ para cualesquiera $t, s_1, s_2 \in \mathbb{R}_+$
+\end{enumerate}
+
+\textbf{Observación:} Se puede demostrar que para casi todo $w \in \Omega$, la aplicación $t \mapsto B_t (w)$ es continua
+\\ 
+\textbf{Ejemplo:} El precio de una acción sigue un movimiento Browniano. El precio de la acción al tiempo 3 es de \$52. Calcule la probabilidad de que el precio de la acción sea de al menos \$55 al tiempo 12. 
+\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ 
+¿Hace sentido que el movimiento Browniano sea un modelo para precios de activos? \\ NO, por muchas razones, la principal es que $B_t$ puede tomar cualquier valor real, y los precios en principio, son no negativos. 
+
+\section{Movimiento Browniano Aritmetico} 
+\textbf{Definición:} Un movimiento Browniano aritmetico $(X_t)_{t \geq 0}$ es un proceso estocastico que se puede escribir como $$ X_t =X_0+\alpha t +\sigma B_t$$ Donde $(B_t)_{t\geq 0}$ es un movimiento Browniano estandar. 
+\\ Nótese que:
+\begin{itemize}
+\item $$X_{t+s}-X_t = (X_0 +\alpha (t+s)+\sigma B_{t+s})+(X_0+\alpha t +\sigma B_t)$$
+$$=\alpha s +\sigma (B_{t+s} - B_t)$$  
+\item $$\mathbb{E}(X_{t+s}-X_s)=\alpha s+\sigma \mathbb{E}(B_{t+s} - B_t)$$
+         $$ =\alpha s +\sigma 0 =  \alpha s$$
+\item $$ Var(X_{t+s}-X_s)=Var( \alpha s + \sigma (B_{t+s} - B_t)$$
+         $$ =Var(\sigma(B_{t+s} - B_t))$$
+         $$ = \sigma^2 Var(B_{t+s} - B_t)$$
+         $$ =\sigma^2 s$$
+\end{itemize}
+Entonces, $$ X_{t+s}-X_t \sim N(\alpha s, \sigma^2 s)$$
+Al parametro $\alpha$ se le conoce como \textbf{drift} del proceso. \\
+Tambien nótese que: $$ X_{t+s}|X_t = x \sim N(x+\alpha s, \sigma^2 s)$$
+\textbf{Ejemplo:} El precio de un acción sigue un movimiento Browniano aritmetico de la forma $X_t = X_0 +t+0.2B_t$. Si el precio actual de la acción es de \$40, calcule la probabilidad de que el precio de la acción al tiempo 4 sea menor de \$43. 
+\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ 
+¿Hace sentido que el movimiento Browniano Aritmetico sea un modelo para precios de activos? \\
+NO. Por lo mismo que un movimiento Browniano estandar. 
+\\ 
+\section{ Movimiento Browniano Geométrico}
+\textbf{Definición:} Se dice que el proceso $(X_t)_{t\geq 0}$ es un movimiento Browniano geométrico si $(log(X_t))_{t\geq 0}$ es un movimiento Browniano aritmético. 
+\\ Si, $$ log(\frac{X_t}{X_0}) \sim N(\mu t, \sigma^2 t)$$
+Entonces, $$X_t \sim logN(\mu t, \sigma^2 t)$$
+Y por lo tanto, $$\mathbb{E}(\frac{X_t}{X_0})=e^{ \mu t +\frac{1}{2}\sigma^2 t}$$
+                         $$ Var(\frac{X_t}{X_0})=e^{2\mu t +\sigma^2 t} (e^{ \sigma^2 t}-1)$$
+Pero también se puede escribir $log(\frac{X_t}{X_0})=\mu t +\sigma \sqrt{t} Z$, donde $Z\sim N(0,1)$
+\\ $\Rightarrow \frac{X_t}{X_0} = exp\{\mu t+\sigma \sqrt{t} Z\}$
+\\ $\Rightarrow X_t = X_0e^{\mu t+\sigma \sqrt{t} Z}$
+\\ \\  El movimiento Browniano geometrico es un modelo popular para modelar precios de acciones. 
+\begin{itemize} 
+\item Si $(S_t)_{t \geq 0}$ sigue un movimiento Browniano geometrico, entonces $\frac{S_{t+n}}{S_0}$ se distribuye log-normal. 
+\item Tambien $\frac{S_{t+n}}{S_t}$ se distribuye log-normal, cuyos parámetros no dependen de t. 
+\end{itemize}
+
+*\textbf{Disclaimer:} A partir de este momento, seré muy muy muy informal en la manera que escribo matematicas. Me interesan las ideas que la formalidad. 
+\\
+En cálculo clásico se sabe que si $y(t)=e^{rt}$, entonces $$\frac{dy}{dt}=ce^{ct}$$
+Escrito en forma de "diferenciales"
+$$dy=ce^{rt}dt=cydt$$
+Es decir, $\frac{dy}{y}=cdt$ (que ya se parecea alguna de las ecuaciones diferenciales que conocemos) \\
+Supongase que hay cierta incertidumbre en esta tasa de cambio, i.e., se escribirá $\frac{dy}{y}=cdt+\sigma dB_t$, donde $\sigma dB_t$ es el "término de error".
+\\
+En este momento se puede decir que $dB_t$ es la "diferencial" de un movimiento \textbf{Browniano Estandar}, que se puede pensaer como el límite ciando $n\rightarrow 0$, de una variabe aleatoria igual a $h$ con probabilidad $\frac{1}{2}$ e igual a $-h$ con probabilidad $\frac{1}{2}$ \\\\
+\textbf{Ejemplo:} En un movimiento Browniano aritmetico $X_t=X_0+\mu t+\sigma B_t$ se escribe la "diferencial"de éste como $$dX_t=\mu dt+\sigma dB_t$$
+"Un pequeño cambio en X es igual a $\mu$ veces un pequeño cambio en el tiempo más $\sigma$ veces un pequeño cambio en el movimiento Browniano" 
+\\ 
+\textbf{Ejemplo:} En un movimiento Browniano Estandar $(B_t)_t\geq0$, $B_t \sim N(0, t)$, por lo tanto $dB_t\sim N(0, dt)$ \\
+El valor al tiempo t de un movimiento Browniano geometrico $(X_t)t\geq0$ se puede expresar en términos de su logaritmo 
+$$log(X_t)=log(X_0)+(\zeta -\frac{1}{2}\sigma^2)t + \sigma B_t$$ 
+La "diferencial" de esta expresión es 
+$$ d(log(X_t))=(\zeta -\frac{1}{2}\sigma^2)dt+\sigma dB_t$$ 
+Y se dijo que este movimiento Browniano geometrico se puede expresar como $$ X_t=X_0 exp{(\zeta -\frac{1}{2}\sigma^2)t+\sigma B_t}$$
+Más adelante se probará que la dferencial de este movimiento Browniano es $$dX_t=\zeta X_t dt + \sigma X_t dB_t$$
+$$\Rightarrow \frac{dX_t}{X_t}=\zeta dt +\sigma dB_t$$ 
+\textbf{Ejemplo:} Supongase que el proceso de precios de una acción sigue la dinamica $dS_t=0.25S_t dt+0.10S_tdB_t$, calcular la probabildad de que $S_t$ sea al menos $5\%$ más grande que $S_0$ en: 
+\begin{itemize}
+\item t=1
+\item t=0.1
+\end{itemize}
+
+\textbf{Solución:}
+La dinamica de la acción es un movimiento Browniano geometrico con $\zeta=0.25$ y $\sigma=0.10$, por lo tanto $\mu=\zeta-\frac{1}{2}\sigma^2$ es el parametro correspondiente al movimiento Browniano Arirmetico, entonces $$d(log(S_t))=(0.25-\frac{1}{2}(0.1)^2)dt+0.1dB_t$$ $$=0.245dt+0.1dB_t$$
+Entonces $$\mathbb{P}(\frac{S_t}{S_0}\geq 1.05)=\mathbb{P}(log(S_t)-log(S_0)\geq log(1.05))$$
+\begin{itemize}
+\item Para $t=1$, $m=0.245$ y $v=0.1$
+$$\mathbb{P}(log(S_t)-log(S_0)\geq log(1.05))$$
+$$=\mathbb{P}(\frac{log(S_t)-log(S_0)-0.245}{0.1}\geq \frac{log(1.05)-0.245}{0.1})$$
+$$=1-\Phi(\frac{log(1.05)-0.245}{0.1})=1-\Phi(-1.96210)$$
+$$=\Phi(1.96210)=0.97512=\mathbb{P}(S_1\geq S_0(1.05))$$ 
+\item Para $t=0.1$, $m=0.245(0.1)$, $v=0.1\sqrt{0.1}$ 
+$$\mathbb{P}(log(S_t)-log(S_0)\geq Log(1.05))$$
+$$=\mathbb{P}(\frac{log(S_t)-log(S_0)-0.0245}{0.1\sqrt{0.1}} \geq \frac{log(1.05)-0.0245}{0.1\sqrt{0.1}}$$
+$$=1-\Phi(0.26812)=0.22121=\mathbb{P}(S_{0.1} > S_0 (1.05))$$
+\end{itemize} 
+\textbf{Ejemplo:} Se sabe que $(S_t)_{t>0}$ sigue una dinamica estocastisca definida mediante $\frac{dS_t}{S_t}=0.15dt+0.2dB_t$, dado que $S_0=40$, calcular la probabilidad de que $S_{13} \in (40,50)$
+\\ 
+\textbf{Solucion:}   \\
+$(S_t)_{t>0}$ sigue un movimiento Browniano geometrico. $$ \mathbb{P}(10<S_13 <50 | S_q =40)=\mathbb{P}(40<S_{13-9}<50 | S_{9-9}=40)$$  $$\mathbb{P}(40<S_4 <50 | S_0=40)$$
+Los parámetros asociados a la variable aleatoria normal son: $$\mu t = 4(0.15-\frac{1}{2}(0.2)^2)=0.52$$  $$\sigma \sqrt{t} =0.2 \sqrt{4} =0.4$$
+Así que, $$\mathbb{P}(\frac{40}{40} < \frac{S_4}{S_0} <\frac{50}{40}) = \mathbb{P}(log(1)<log(\frac{S_4}{S_0}) < log(\frac{5}{4}) $$ $$=\mathbb{P}(\frac{log(1)-0.52}{0.4} \leq \frac{log(\frac{S_4}{S_0})-0.52}{0.4} \leq \frac{log(\frac{5}{4})-0.52}{0.4})$$
+$$ \Phi (\frac{log(\frac{5}{4})-0.52}{0.4})-\Phi(\frac{-0.52}{0.4})$$ $$\Phi(-0.74214)-\Phi(-13)$$ $$=0.1322$$ 
+
+Formalmente, cuando se escribe la expresión $$dX_1 =a(t, X_t)+b(t, X_t)dB_t$$ Se esta haciendo referencia a la siguiente ecuación $$X_t = X_0 + \int_{0}^{t} a(u,X_u) \,du + \int_{0}^{t} b(u,X_u) \,dB_u$$
+
+\textbf{El lema de Ito} \\
+ 
+\textbf{Definición:} Un proceso de Ito es un proceso estocástico $(X_t)_{0 \leq t}$ cuya diferencial se puede expresar como: $$ dX_t = a(t,X_t)dt +b(t,X_t)dB_t  $$
+\begin{itemize}
+\item El movimiento Browniano aritmetico es un proceso de Ito con $a(t,X_t)=\alpha$ y $b(t,X_t)=\sigma X_t$ 
+\item El movimiento Browniano geometrico es un proceso de Ito, con $a(t, X_t)=cX_t$ y $ b(t, X_t)=\sigma X_t$ 
+\end{itemize}
+ 
+Un ejemplo importante es: $$dX_t =\lambda (\alpha -X_t)dt +\sigma dB_t $$
+i.e., $a(t, X_t)=\lambda (\alpha-X_t)$ y $b(t,X_t)=\sigma$. \\ \\
+"La" solución a esta ecuaciónse conoce como proceso de \textbf{Ornstein-Uhlenbeck} \\
+\begin{itemize}
+\item A $a(t,X_t)$ se le conoce como funcion de \textbf{drift} y a $b(t,X_t)$ se le conoce como función de volatilidad o función de difusión. 
+\item El lema de Ito es una fórmula para "calcular" $dg(S,t)$, i.e., la "diferencial" de una función S y t donde S es estocastico. 
+\end{itemize}
+\textbf{Proposición (lema de Ito)}: 
+$$dg=\frac{\delta g}{\delta S} ds + \frac{\delta g}{\delta t} dt +\frac{1}{2} \frac{\delta^2 g}{\delta S^2} (dS)^2 $$
+Donde para obtener $(dS)^2$ se utiliza la siguiente tabla: 
+\begin{center}
+ \begin{tabular}{||c c c ||} 
+ \hline
+  & dt & $dB_t$\\ [0.5ex] 
+ \hline\hline
+ dt & 0 & 0 \\ 
+ \hline
+$dB_t$ & 0 & dt \\
+ \hline
+\end{tabular}
+\end{center}
+
+\textbf{Observaciones:} Según esta tabla de "multiplicación" 
+\begin{itemize}
+\item $dB_t(dB_t)=dt$ 
+\item $(dB_t)^3 = dB_t(dB_t)(dB_t)=dt(dB_t)=0$ 
+\item $(dB_t)^4=(dB_t)^3(dB_t)=0(dB_t)=0$
+\end{itemize}
+
+\textbf{Ejemplo:} \\
+Si $X_t=\alpha t +  \sigma B_t $, calcular $dX_t$ usando el lema de Ito. \\
+\textbf{Solución:} \\
+$X_t$ es una función de $B_t$, por tanto X juega el papel de g y B juega el papel de S en el lema de Ito. 
+
+\begin{itemize}
+\item $\frac{\delta X}{\delta B}=\frac{\delta}{\delta B} (\alpha t +\sigma B) =\sigma $
+\item $\frac{\delta^2 X}{\delta B^2}=\frac{\delta}{\delta B}\sigma =0$
+\item $\frac{\delta X}{\delta t}=\frac{\delta}{\delta t}(\alpha t+\sigma B)=\alpha $
+\end{itemize}
+Etronces, según el lema de Ito, $$ dX_t=\frac{\delta X}{\delta B} dB_t + \frac{\delta X}{\delta t} dt + \frac{1}{2} \frac{\delta^2 X}{\delta B^2} (dB)^2 $$
+$$= \sigma dB_t 6 \alpha dt + \frac{1}{2} 0 dt $$ 
+$$=\alpha dt + \sigma dB_t$$
+
+\textbf{Ejemplo:} Suponga que $X_t=X_0 exp{(c-\frac{1}{2}\sigma^2)t +\sigma B_t}$, calcular $sX_t$ usando el lema de Ito. 
+\\
+$$\frac{\delta X}{\delta B}= \frac{\delta}{\delta B} (X_0 exp{(c-\frac{1}{2}\sigma^2)t +\sigma B})$$ $$=X_0 exp{(c*-\frac{1}{2}\sigma^2)t +\sigma B}\sigma$$ $$=\sigma X$$ 
+
+$$\frac{\delta^2 X}{\delta B^2}= \frac{\delta}{\delta B}(\sigma X)$$ $$=\sigma \frac{\delta X}{\delta B}$$ $$ =\sigma (\sigma X)=\sigma^2 X$$
+$$\frac{\delta X}{\delta t} =\frac{\delta}{\delta t} (X_0 exp{(c-\frac{1}{2}\sigma^2)t +\sigma B})$$ $$=X_0 exp{(c-\frac{1}{2}\sigma^2)t +\sigma B_t})(c-\frac{1}{2})$$ $$=(c-\frac{1}{2}\sigma^2)X$$
+Entonces, por el lema de Ito
+ $$ dX_t=\frac{\delta X}{\delta B} dB_t + \frac{\delta X}{\delta t} dt + \frac{1}{2} \frac{\delta^2 X}{\delta B^2} (dB)^2 $$
+$$=\sigma X_t dB_t + (c-\frac{1}{2}\sigma^2)X_t dt+ \frac{1}{2}\sigma^2 X_t (dB_t)^2$$
+$$=\sigma X_t dB_t + (c-\frac{1}{2}\sigma^2)X_t dt+ \frac{1}{2}\sigma^2 X_t dt$$
+$$=\sigma X_t dB_t + cX_t dt$$
+$$=cX_t dt +\sigma X dB_t$$
+$$\Rightarrow \frac{dX_t}{X_t}=c dt + \sigma dB_t$$
+
+\textbf{Ejemplo:} Se sabe que $\frac{d X_t}{X_t}=\zeta dt + \sigma dB_t$. Calcular $d(log(X_t))$ utilizando el lema de Ito.
+
+\textbf{Solución:} \\
+Sea $Y_t := log(X_t)$. \\
+$$\Rightarrow  \frac{\delta y}{\delta X} = \frac{1}{X} $$ 
+$$ \frac{\delta^2 Y}{\delta X^2}=-\frac{1}{X^2} $$
+$$\frac{\delta Y}{\delta t}=0$$
+Entonces, $$dY_t =\frac{1}{X_t}dX_t+0dt+\frac{1}{2}(-\frac{1}{X^2})(dX_t)^2$$
+$$=\zeta dt +\sigma dBt +\frac{1}{2}(-\frac{1}{X_t^2}(dX_t)^2$$
+$$=\zeta dt+ \sigma dB_t -\frac{1}{2}(\frac{dX_t}{X_t})^2$$
+$$=\zeta dt +\sigma dBt - \frac{1}{2}[\zeta^2 dtdt + \sigma^2 dB_t dB_t+2\zeta \sigma dtBt]$$
+$$=\zeta dt+\sigma dB_t-\frac{1}{2}\sigma^2 dt$$
+
+\textbf{Ejemplo:} Se sabe que el precio de una acción sigue un proceso de Ito $dSt=\zeta S_t dt +\sigma S_t dB_t$. Considere un derivado sobre S que al tiempo t paga $S_t^5$ i.e., $C(S_t, t)=S_t^5$. Demuestre que $(Log(C(S_t, t)))_{0 \leq t}$ es un proceso de Ito. 
+
+\textbf{Solución:} 
+$$\frac{\delta C}{\delta S}=\frac{\delta}{\delta S}(S^5)=5S^4$$
+$$\frac{\delta^2 C}{\delta S^2}=\frac{\delta}{\delta S}(5S^4)=20S^3$$
+$$\frac{\delta C}{\delta t}=\frac{\delta}{\delta t}(S^5)=0$$
+Entonces, por el lema de Ito:
+$$dC=5S_t^4 dS_t +0dB_t +\frac{1}{2} 20S_t^3 (dS_t)^2$$
+$$=5S_t^4 ds + \frac{1}{2}20S_t^3(dS_t)^2 ... (*)$$
+Pero, $$(dS_t)^2=(\zeta S_t dt +\sigma S_t dB_t)^2$$
+$$=\zeta^2 S_t^2 dt dt + 2\zeta \sigma S_t^2 dtB_t + \sigma ^2 S_t^2 dB_t dB_t$$
+$$=\zeta^2 S_t^2 (0)+2\zeta \sigma S_t^2 (0) + \sigma^2 S_t^2 dt $$
+$$=\sigma^2 S_t^2 dt$$
+Así, sustituyendo en (*) tenemos que:
+$$dC=5S_t^4 dS_t +10 S_t^3 \sigma^2 S_t^2 dt $$
+$$=5S_t^4 (\zeta S_t dt + \sigma S_t dB_t)+10\sigma^2 S_t^5 dt $$
+$$=5\zeta S_t^5 +5\sigma S_t^5 dB_t +10 \sigma^2 S_t^2 dt$$
+$$=(5\zeta S_t^5 +10  \sigma S_t5)dt +5\sigma S_t^5 dB_t$$
+$$=S_t^5[(5 \zeta +10 \sigma^2)dt +5\sigma dB_t]$$
+$$=C(S,t)[(5\zeta +10 \sigma^2) dt + 5\sigma dB_t]$$ 
+
+Por el ejemplo 3, $$d(log(C_t))=(5\zeta +10 \sigma^2-\frac{1}{2}(5\sigma)^2)dt +(5\sigma)dB_t$$ $$=(5\zeta - \frac{5}{2}\sigma^2)dt + 5\sigma dB_t$$
+Haciendo $(5\zeta - \frac{5}{2}\sigma^2) = a$ y $ 5\sigma = b$
+$$\Rightarrow dlog(C_t)=adt  +b dt $$
+
+$\therefore (log(C_t))_{0 \leq t}$ es un proceso de Ito.  \\ \\
+
+$\rightarrow$ \textbf{Más adelante veremos más ejemplos} 
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

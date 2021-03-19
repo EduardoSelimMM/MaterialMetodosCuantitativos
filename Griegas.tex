@@ -1,0 +1,189 @@
+\documentclass[12pts]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[margin = 1in]{geometry}
+\usepackage[spanish]{babel} 
+\decimalpoint
+\usepackage{amsmath}
+\usepackage[all]{xy}
+\usepackage{mathtools}
+\usepackage{amsfonts} % mathbb
+\usepackage{mathrsfs} % mathscr
+\usepackage{enumitem} % letras en enumerate
+\usepackage[bottom]{footmisc}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{graphicx}
+\graphicspath{{imag/}}
+\setlength\parindent{0pt} % Quita indents de todo el documento
+\author{}
+\date{}
+\title{Griegas}
+\begin{document}
+\maketitle
+\begin{itemize}
+\item Las griegas son \textbf{sensibilidad} del valor de las opciones ante cambios en alguno de sus parametros. 
+\item Las más populares son: 
+$$\Delta=\frac{\delta V}{\delta S} \, \, \,\, \, \, \, \, \, \Gamma=\frac{\delta^2 V}{\delta S^2} \, \, \, \, \, \, \, \, \ \Theta=\frac{\delta V}{\delta t}$$ 
+\begin{itemize}
+\item \textbf{Delta} ($\Delta$): Mide el cambio en el preciode un derivado ante cambios en el precio del subyacente.\\ $\rightarrow$ Una $\Delta$ grande significa que el precio es muy sensible a pequeños cambios en S. Por lo tanto, un derivado \textbf{tiene más incertidumbre} si tiene una $\Delta$ grande (en valor absoluto).
+\item \textbf{Gamma} ($\Gamma$): Mide el cambio en $\Delta$ ante cambios en el precio del subyacente.
+\item \textbf{Theta} ($\Theta$): Mide el cambio en el precio del derivado \textbf{conforme decrece el tiempo a la expiración}, (T-t), i.e., un incremento en t (con T fijo). 
+\end{itemize}
+\item Bajo el framework de B\&S se puede demostrar lo siguiente para una acción. 
+\begin{enumerate}
+\item $\Delta_{call}=e^{-\delta(T-t)}\Phi (d_1)$
+\item $\Gamma_{call}=e^{-\delta(T-t)}\frac{1}{S\sigma\sqrt{T-t}}\Phi (d_1)$
+\item $\Theta_{call}=\delta Se^{-\delta(T-t)}\Phi (d_1)-rKe^{-r(T-t)}\Phi(d_2)-e^{-\delta(T-t)}\frac{S\sigma}{2\sqrt{T-t}}\Phi(d_1)$
+\end{enumerate}
+\item Se puede obtener $\Delta_{put} \, \, , \Gamma_{put} \, \, \, , \Theta_{put}$ directamente o de puede usar la paridad put-call. 
+$$C(S,K,T-t)-P(S,K,T-t)=Se^{-\delta(T-t)}-Ke^{-r(T-t)}...*$$
+\item Derivando ambos lados de * (Con respecto a S) 
+$$\frac{\delta}{\delta S}C(S,K,T-t)-\frac{\delta}{\delta S}P(S,K,T-t)=\frac{\delta}{\delta S}Se^{-\delta(T-t)}-\frac{\delta}{\delta S}Ke^{-r(T-t)}$$
+$$\Rightarrow \Delta_{call}-\Delta_{put}=e^{-\delta(T-t)}-0$$
+$$\Rightarrow \Delta_{put}=\Delta_{call}-e^{-\delta(T-t)} \Rightarrow \Delta_{put}=e^{-\delta (T-t)}\Phi(d_1)-e^{-\delta(T-t)}$$
+$$\Rightarrow \Delta_{put}=e^{-\delta (T-t)}(\Phi(d_1)-1)=-e^{-\delta(T-t)}\Phi(-d_1)$$
+$$\therefore \Delta_{put}=-e^{-\delta(T-t)}\Phi(-d_1)$$
+\item Derivandodos veces con respecto a S ambos lados de *
+$$\frac{\delta^2}{\delta S^2}C(S,K,T-t)-\frac{\delta^2}{\delta S^2}P(S,K,T-t)=\frac{\delta^2}{\delta S^2}Se^{-\delta(T-t)}-\frac{\delta^2}{\delta S^2}Ke^{-r(T-t)}$$
+$$\Rightarrow \Gamma_{call}-\Gamma_{put}=\frac{\delta}{\Delta S}e^{-\delta(T-t)}-0$$
+$$\Rightarrow \Gamma_{call}-\Gamma_{put}=0-0$$
+$$\Rightarrow \Gamma_{call}=\Gamma_{put}$$
+\item Derivando ambos lados de * con respecto a t.
+$$\frac{\delta}{\delta t}C(S,K,T-t)-\frac{\delta}{\delta t}P(S,K,T-t)=\frac{\delta}{\delta t}Se^{-\delta(T-t)}-\frac{\delta}{\delta t}Ke^{-r(T-t)}$$
+$$\Rightarrow \Theta_{call}- \Theta_{put}=Se^{-\delta(T-t)}\delta-Ke^{-r(T-t)}r$$
+$$\Rightarrow \Theta_{put}=\Theta_{call}+rKe^{-r(T-t)}-\delta Se^{-\delta(T-t)}$$
+
+\item Algunas observaciones respecto a $\Delta$ 
+$$\Delta_{call}=e^{-\delta(T-t)}\Phi(d_1) \in [0, e^{-\delta(T-t)}]$$
+$$\Delta_{put}=e^{-\delta(T-t)}\Phi(-d_1) \in [e^{-\delta(T-t)},0 ]$$
+\begin{itemize}
+\item Si una opción está muy out-of-the-money, entonces $\Delta \approx 0$, esto se debe a que cuando una opción está muy out-of-the-money es muy poco probable que dicha opción se ejerza, por lo tanto $V=0$. \\ Por lo tanto $\Delta \approx 0$ ya que si S cambia en una pequeña cantidad, V seguirá siendo muy cercano a 0.
+\item Si una call esta muy in-the-money, entonces $\Delta_{call} \approx e^{-\delta(T-t)}$. Esto se debe a que si la call está muy in-the-money, se espera que el payoff final de la call sea $S_T-K$ y por lo tanto $V \approx Se^{-\delta(T-t)}-Ke^{-r(T-t)}$ i.e., la call se comportará como un forward largo y por lo tanto $\Delta_{call}=e^{-\delta(T-t)}$ 
+\item Si una put esta muy in-the-money, entonces $\Delta_{put} \approx e^{-\delta(T-t)}$. Esto se debe a que si la put está muy in-the.money, se espera que al payoff final de la put sea $K-S_t$ y por lo tanto $V \approx Ke^{-r(T-t)}-Se^{-\delta(T-t)}$, i.e.,la put se comportará como un forward corto y por lo tanto $\Delta \approx -e^{-\delta(T-t)}$ 
+\item \textbf{Lenguaje financiero:} Algunas personas usan el término "activo con delta 1" para referirse a una acción pues $$\Delta_{accion}=\frac{\delta S}{\delta S}=1$$
+\end{itemize}
+\item Algunas observaciones con respecto a $\Gamma$
+\begin{itemize}
+\item Calls y puts con el mismo strike y tiempo al vencimiento tienen el mismo valor de $\Gamma$, $\Gamma_{call}=\Gamma_{put}$.
+\item Para calls y puts largas, $\Gamma$ debe ser positivo, i.e., se dice que las calls y puts son derivado convexos. 
+\item Si una call o put están muy out-of-the-money o muy in-the-money, entonces $\Gamma \approx 0$ cuando S es muy bajo o muy alto. 
+\end{itemize}
+\item Algunas observaciones con respecto a $\Theta$
+\begin{itemize}
+\item El valor de $\Theta$ puede ser positivo o negativo. Es común que sea negativo, ya que los precios de las calls y de las puts tienden a dosminuir conforme el tiempo pasa. \\
+$rightarrow$ Una excepción es una put Europea muy in-the-moneysobre una opción que no paga dividendos ya que se espera que el payoff inal de la put sea $K-S_T$ y por lo tanto $V \approx Ke^{-r(T-t)-S}$ y por lo tanto $$\Theta \approx rKe^{r(t-t)}>0$$
+\item La $\Theta_{call}$ de una call sobre una acción que no paga dividendos es negativa pues,
+$$\Theta_{call}=\delta Se^{-\delta(T-t)}\Phi(d_1)-rKe^{-r(T-t)}\Phi(d_2)-e^{-\delta (T-t)}\frac{s \sigma}{2\sqrt{T-t}}\Phi(d_1)$$
+$$=-[rKe^{-r(T-t)}\Phi(d_2)+e^{-\delta(T-t)}\frac{S\sigma}{2\sqrt{T-t}\Phi(d_1)}]<0$$
+\item $\Theta$ de una opción muy out-of-the-money es $\Theta \approx 0$, pues en este caso se espera que el payyoff final de la opción 0
+\end{itemize}
+\end{itemize}
+\section{Aproximación Delta-Gamma-Theta}
+\begin{itemize}
+\item Además de cuantificar incertidumbre de un derivado, $\Delta\, \Gamma \, y \Theta$ se pueden usar para aproximar el precio del derivado si t o s cambian en una pequeña cantidad. \\
+$V(S,t):$ Precio al tiempo t del derivado. \\ ¿Qué pasa si el precio de la acción repentinamente cambia a $S+\epsilon$ ?
+\\ 
+Por el Teorema de Taylor
+$$V(S+\epsilon, t)\approx V(S,t)+\frac{\delta}{\delta S}V(S,t)\, \epsilon +\frac{1}{2} \frac{\delta^2}{\delta S^2}V(S,t)\, \epsilon^2$$
+Es decir, 
+$$V(S+\epsilon, t)\approx V(S,t)+\Delta|_{S,t} \, \epsilon +\frac{1}{2} \Gamma |_{S,t} \, \epsilon^2$$
+Esta es la aproximación Delta-Gamma.
+\\ 
+Si se elimina el término de Gamma, se obtiene la expresión
+$$V(S+\epsilon, t)\approx V(S,t)+\Delta|_{S,t} \, \epsilon $$
+Esta es la aproximación Delta. 
+\item Es poco creible que S cambie repentinamente abruptamente. Una situación más razonable es que el precio de la acción vaya de $S_t$ a $S_{t+h}$. A partir del Teorema de Taylos para dos dimensiones
+$$V(S_{t+h},t+h)\approx V(S_t,t)+\Delta \epsilon +\frac{1}{2}\Gamma \epsilon^2 + \Theta h $$
+Aproximación Delta-Gamma-Theta. 
+\\ Donde $\epsilon=S_{t+h}-S_t$ y las 3 griegas se evaluan en $S_t$ y t. 
+\end{itemize}
+\section{Otras griegas}
+\begin{itemize}
+\item Vega
+$$   \vartheta :=\frac{\delta}{\delta \sigma}V $$ 
+\item Psi
+$$  \psi := \frac{\delta}{\delta d}V   $$
+\item Rho
+$$   \rho := \frac{\delta}{\delta r}V  $$
+\end{itemize}
+
+\section{Delta-hedging}
+\begin{itemize}
+\item \textbf{Motivación:} Cuando se emite una call, se adquiere el compromiso de vender el activo subyacente en caso de que la otra parte decida comprarlo. Por lo atnto, el emisor perdera dinero en caso de que el precio del subyacente suba. Para evitar esta pérdida, éste debe cubrirse comprando alfo que suba de precio si el subyacente sube de precio. El candidato más obvio es el subyacente mismo. ¿Cuánto se debe comprar el subyacente? Como $\Delta$ mide el incremento en el precio de la opción por unidad de incremento en el precio de la acción, se debe comprar $\Delta$ unidades del subyacente. \\ ¡Sin embargo, $\Delta$ unidades de subyacente cuestan más que una call! \\ Por lo tanto, se tiene interés en el portafolio cobertura. 
+\item \textbf{Suposición:} La acción subyacente no paga dividendos. 
+\item Un portafolio delta-hedgeg consiste en vender (o comprar) una opción, comprar $\Delta$ acciones y pedir prestado el dinero para las otras 2 transacciones. 
+\item El profit de un día a otro de este portafolio, también conocido como overnight profit, tiene 3 componentes.
+ \begin{enumerate}
+\item El cambio en el valor de la opción
+\item $\Delta$ veces eñ cambio enel precio de la acción.
+\item El interés sobre el dinero que se pidió prestado. Es decir $$Profit=-(V(S_1)-V(S_0))+ \Delta(S_1-S_0)-(e^{\frac{r}{365}}-1)(\Delta S_0-V(S_0))$$
+\end{enumerate}
+Donde, 
+\begin{itemize}
+\item r: Tasa libre de riesgo anual con composición continua.
+\item $S_0$: Precio de la acción al inicio del día. 
+\item $S_1$: Precio de la acción al final del día. 
+\end{itemize}
+\item Si se quiere estudiar los cambios de este portafolio hedged en pequeños intervalos de longitus h, entonces
+$$Profit \approx -(V(S_{t+h})-V(S_t))+ \Delta(S_{t+h}-S_t)-rh(\Delta S_t-V(S_t))...(1)$$
+Sin embargo, si se recuerda la aproximación Delta-Gamma-Theta
+$$V(S_{t+h}, t+h)\approx V(S_t, t= +\Delta \, \epsilon + \frac{1}{2}\Gamma \, \epsilon^2 +\theta h$$
+donde $\epsilon=S_{t+h}-S_t$, entonces la ec (1) se puede reescribir como
+$$Profit \approx -(\Delta \, \epsilon +\frac{1}{2}\Gamma \, \epsilon^2 +\theta h)+\Delta(S_{t+h}-S_t)-rh(\Delta S_t-V(S_t))$$
+$$-(\Delta \, \epsilon +\frac{1}{2}\Gamma \, \epsilon^2 +\Theta h)+\Delta \, \epsilon -eh(\Delta S_t-V(S_t))$$
+$$=-[\frac{1}{2}\Gamma \, \epsilon^2+\Theta h +rh(\Delta S_t-V(S_t))]$$
+Por lo tanto,
+$$Profir \approx -[\frac{1}{2}\Gamma \, \epsilon^2+\Theta h+ rh\Delta (S_t-V(S_t))]$$
+Si además se supone que el precio de la acción se mueve una desviación estandar, entonces $\epsilon=\pm \sigma S \sqrt{h}$ se tiene que.
+$$Profit = -[\frac{1}{2}\Gamma \sigma^2 S^2 h+\Theta h +rh(\Delta S_t-V(S_t))]$$
+$$=-h[\frac{1}{2}\Gamma \sigma^2 S^2 +\Theta  +r(\Delta S_t-V(S_t))]$$
+Obsérvese que en este caso
+$$Profit =0 \Leftrightarrow \frac{1}{2}\Gamma \sigma^2 S^2 +\Theta  +r(\Delta S_t-V(S_t))=0$$
+$$ \Leftrightarrow \frac{1}{2}\Gamma \sigma^2 S^2 +\Theta + rS_t\Delta=rV(S_t)$$
+¿Esta expresión les recuerda algo? 
+\end{itemize}
+\textbf{Tarea:} Repetir este argumento cuando la acción paga dividendos. 
+$$Profit \approx  -[\frac{1}{2}\Gamma \epsilon^2 +\Theta h +rh(\Delta S_t-V(S_t))-\delta h \Delta S_t]$$
+Si además,$\epsilon := \pm \sigma S\sqrt{h}$
+$$Profit=-h [\frac{1}{2}\Gamma \sigma^2 S_t^2 +\Theta  +r(\Delta S_t-V(S_t))-\delta \Delta S_t]$$
+De aquí que 
+$$Profit=0 \Leftrightarrow \frac{1}{2}\Gamma \sigma^2 S_t^2  +(r-\delta)S_t\Delta+\Theta=rV(S_t)$$
+%%%Sigue un Rmarkdown%%%%%%%%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

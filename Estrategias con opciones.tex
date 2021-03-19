@@ -1,0 +1,191 @@
+\documentclass[12pts]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[margin = 1in]{geometry}
+\usepackage[spanish]{babel} 
+\decimalpoint
+\usepackage{amsmath}
+\usepackage[all]{xy}
+\usepackage{mathtools}
+\usepackage{amsfonts} % mathbb
+\usepackage{mathrsfs} % mathscr
+\usepackage{enumitem} % letras en enumerate
+\usepackage[bottom]{footmisc}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{graphicx}
+\graphicspath{{imag/}}
+\setlength\parindent{0pt} % Quita indents de todo el documento
+\author{}
+\date{}
+\title{Estrategías con Opciones}
+\begin{document}
+\maketitle 
+ \section{Opciones \& el activo subyacente} 
+
+\begin{itemize} 
+\item Estrategías que involucran comprar/venderuna opcion y el activo subyacente.
+\item En cada estrategía, la opción contrarresta/neutraliza la acción:
+\begin{itemize}
+\item Si se compra la acción, la opción esta corta en la acción. 
+\item Si se vende la acción, la opción esta larga en la acción. 
+\end{itemize}
+%% diagrama %%
+\end{itemize}
+
+\section{Floor} 
+\begin{itemize} 
+\item Acción larga \& put larga.
+\item payoff= $S_T + (K-S_T)_+$
+\item payoff= $S_T+(K-S_T)_+ = S_T + \Bigg \{_{0 \, si \, S_T \geq K}^{K-S_T \, si \, S_T < K }$
+\item Si se posee una acción, se puede comprar una put sobre dicha acción para garantuizar que se podra vender la acción en al menos el precio Strike. $$ payoff \, floor = max\{S_T, K\}$$ 
+%% diagrama %%
+\end{itemize}
+
+\section{Cap} 
+\begin{itemize} 
+\item Acción corta \& Call larga
+$$ payoff= -S_T+(S_T-K)_+ =-S_T + \Bigg \{_{S_T-K \, si \, S_T >K}^{0 \, si \, S_T \leq K} $$
+$$=\Bigg \{_{-K  \, si \, S_T > K}^{-S_T \, si \, S_T \leq K}$$ 
+$$= (-1) \Bigg \{_{K  \, si\, S_T > K}^{S_T \, si \, S_T \leq K }$$ 
+$$= (-1) min\{S_T,K\} =-min\{S_T,K\}$$
+\item Si se está corto en una acción (i.e., se debe una acción) se puede comprar una call. La call garantiza que se podrá comprar de regreso la acción en un precio a lo más el precio Strike
+$$payoff \, cap= -min\{S_T,K\}$$
+%%digrama%%%
+\end{itemize}
+
+\section{Covered written call} 
+\begin{itemize} 
+\item Call corta \& acción larga
+$$payoff=-(S_T-K)_+ + S_T=S_T- \Bigg \{_{S_T-K \, si \, S_T >K}^{0 \, si \, S_T \leq K}$$
+$$ =\Bigg \{_{K \, si \, S_T >K}^{S_T \, si \, S_T \leq K} = min\{ S_T, K\}$$
+\item Si se emite una call, se está tomando una responsabilidad no acotada. Sin embargo, si se compra el activo subyacente, no se necesitará efectivo adicional en la fecha de expiración de la call para cubrir sus obligaciones. 
+\item Emitir una opción sin protección se conoce como \textbf{ naked writting} 
+\end{itemize}
+$$payoff  \, coverede \, written \, call = min\{S_T,K\}$$
+%%diagrama%%%%
+
+\section{Covered written put}
+\begin{itemize} 
+\item Put corta \& acción corta
+$$payoff = -(K-S_T) - S_T=-S_T- \Bigg \{_{0 \, si \, S_T \geq K}^{K-S_T \, si \, S_T < K}$$
+$$=\Bigg \{_{-S_T \, si \, S_T \geq K}^{-K \, si \, S_T < K}$$
+$$=(-1) \Bigg \{_{S_T \, si \, S_T \geq K}^{K \, si \, S_T < K}=(-1) max\{ S_T, K\}$$
+$$=-max\{S_T, K\}$$
+\item Si se emite una put, se está tomando la responsabilidad de comprar la acción subyacente en K, i.e., se toma una responsabilidad de hasta K. Se puede cubrir la put entrando a una posición corta (venta en corto) de la acción subyacente.
+\end{itemize} 
+$$payyof \, covered \, written  \, put = -max\{S_T,K\}$$
+%%diagrama %%%
+\section{Estrategías con dos o más opciones} 
+$\rightarrow$ La estrategías que involucran 2 opciones pueden consistir en:
+\begin{itemize}
+\item Comprar una opción y vender una opción del mismo tipo (i.e., ambas call o ambas put)\\ 
+$\rightarrow$ Bull spread, bear spreads, ratio spreads, box spreads. 
+\item Comprar una opción y vender otra opción de diferente tipo(i.e., comprar una call y vender una put o bien, vender una call y comprar una put) \\ 
+$\rightarrow$ Collars
+\item Comprar 2 opciones de diferentes tipos (o desde otra perspectiva, vender 2 opciones de diferentes tipos) \\
+$\rightarrow$ Straddles, strangles, butterfly spreads.  
+\end{itemize}
+
+\section{ Bull spreads} 
+\begin{itemize} 
+\item Un bull spread paga si la acción se mueve hacia arriba, pero sujero a un limite 
+\end{itemize}
+$\rightarrow$ \textbf{Bull spread con calls:} Para $K_1 < K_2$ comprar una $K_1-Strike \, call $ y vender una $K_2-Strike \, call$
+$$payoff=(S_T-K_1)_+ -(S_T-K_2)_+$$
+%%va tabla%% 
+\newline 
+\newline 
+$\rightarrow$ \textbf{Bull spread con puts:} Para $K_1<K_2$m comprar una $K_1$-strike put y vender una $K_2$-strike put. 
+$$payoff=(K_1-S_T)_+-(K_2-S_T)_+$$ 
+%%va tabla y grafico%%%
+\newline 
+\section{Bear Spreads}
+Un bear spread paga si el precio de la acción se mueve hacia abajo, pero sujeto a un límite. \\
+$\rightarrow$ \textbf{Bear spread con puts:} Para $K_1<K_2$, comprar una $K_2$-strike put y vender una $K_1$-strike put.
+$$payoff=(K_2-S_T)_+ - (K_1-S_T)_+$$
+%%va tabla%% 
+\newline 
+$\rightarrow$ \textbf{Bear spread con calls:} Para $K_1<K_2$, comprar una $K_2$-strike call y vender una $K_1$-strike call. 
+$$payoff=(S_T-K_2)_+-(S_T-K_1)_+$$
+
+%%va tabla%%
+
+ 
+
+\section{Collars: Comprar una opción y vender una opción de otro tipo}
+\begin{itemize}
+\item Para $K_1<K_2$, en un collar "clásico" 
+\begin{itemize}
+\item Se compra una $K_1$-strike put.
+\item Se vende una $K_2$-strike call. 
+\end{itemize}
+\item A la diferencia $K_2-K_1$ se le conoce como \textbf{collar width} (anchura del collar).
+\end{itemize}
+ $$payoff=(K_1-S_T)_+ - (K_2-S_T)_+$$
+%%Va otra tabla y grafico%%%
+
+\textbf{Otro collar:}
+\\ Para $K_1<K_2$, otro tipo de collar es
+\begin{itemize}
+\item Se compra una $K_2$-strike call
+\item Se vende una $K_1$-strike put.
+\end{itemize} 
+$$payoff=(S_T-K_2)_+-(S_T-K_1)_+$$
+%%va tabla y grafico%%%
+
+
+¿Para qué sirve un collar?
+\section{Collared stock}
+Una persona que posee una acción puede comprar un collar tal que $K_1<S_0<K_2$m resultando en lo que se conoce como \textbf{collared stock}
+\\ 
+Es decir, 
+$$payoff=S_T+\Bigg \{ $$
+%%grafica%%
+\section{Straddle}
+Comprar 2 opciones de diferentes tipos. \\ Un straddle consiste en comprar una call y una put sobre el mismo activo subyacente, mismo strike y mismo plazo. 
+$$payoff \, straddle=(S_T-K)_+ +(K-S_T)_+$$ 
+$$=\Bigg \{_{K-S_T \, si \, K>S_T}^{S_T-K  \, si \, k<S_T}$$
+$$=|S_T-K|$$
+%%va grafico%%%%
+
+El payoff de un straddle es $|S_T-K|$, que crece con el valor absoluto del cambio, por lo tanto es una apuesta sobre la volatilidad. 
+\section{Strangle}
+Para disminuir el costo inciial (con respecto al straddle) se puede comprar una put con strike $K_1$ y comprar una call con strike $K_2$, tal que $K_1<S_0<K_2$.
+\\
+$\rightarrow$ Esta estrategía se conoce como strangle. 
+$$payoff \, strangle=(K_1-S_T)_+ +(S_T-K_2)_+$$ 
+%%va diagrama%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
